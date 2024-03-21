@@ -1,3 +1,5 @@
+package Projects;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -17,7 +19,7 @@ class milk extends JFrame {
         nol1 = new JTextField(20);
         nol2 = new JTextField(20);
         btn = new JButton("Enter");
-        l = new JLabel("Enter number of liters of milk 1(Gokul Milk):");
+        l = new JLabel("Enter number of liters of Projects.milk 1(Gokul Milk):");
         l.setFont(new Font("SansSerif",Font.BOLD,20));
 
         JLabel label = new JLabel("<html><div style='display: flex; justify-content: center; align-items: center;'><div style='text-align: center; font-size: 30px;'><b>Welcome to Milk calculator!!!!</b></div></div></html>");
@@ -26,17 +28,17 @@ class milk extends JFrame {
         add(new JLabel("<html><br></html>"));
         add(l);
         add(nol1);
-        l = new JLabel("Enter MONEY / PAISA / RUPEES of liters of milk 1(Gokul Milk):");
+        l = new JLabel("Enter MONEY / PAISA / RUPEES of liters of Projects.milk 1(Gokul Milk):");
         l.setFont(new Font("SansSerif",Font.BOLD,20));
         add(l);
         add(milk_money_1);
         add(new JLabel("<html><br></html>"));
-        l = new JLabel("Enter number of liters of milk 2(Mahananda Milk):");
+        l = new JLabel("Enter number of liters of Projects.milk 2(Mahananda Milk):");
         l.setFont(new Font("SansSerif",Font.BOLD,20));
         add(l);
         add(nol2);
 
-        l = new JLabel("Enter MONEY / PAISA / RUPEES of liters of milk 2(Mahananda Milk):");
+        l = new JLabel("Enter MONEY / PAISA / RUPEES of liters of Projects.milk 2(Mahananda Milk):");
         l.setFont(new Font("SansSerif",Font.BOLD,20));
         add(l);
         add(milk_money_2);
@@ -44,13 +46,13 @@ class milk extends JFrame {
         add(btn);
 
         btn.addActionListener(ae->{
-            int no_of_l1=Integer.parseInt(nol1.getText());
-            int no_of_l2=Integer.parseInt(nol2.getText());
-            int money1=Integer.parseInt(milk_money_1.getText());
-            int money2=Integer.parseInt(milk_money_2.getText());
+            double no_of_l1=Integer.parseInt(nol1.getText());
+            double no_of_l2=Integer.parseInt(nol2.getText());
+            double money1=Integer.parseInt(milk_money_1.getText());
+            double money2=Integer.parseInt(milk_money_2.getText());
 
-            int total1 = no_of_l1*money1;
-            int total2 = no_of_l2*money2;
+            double total1 = no_of_l1*money1;
+            double total2 = no_of_l2*money2;
 
             JLabel j=new JLabel("Money of Gokul Milk = Rs "+total1);
             j.setFont(new Font("SansSerif",Font.BOLD,25));
