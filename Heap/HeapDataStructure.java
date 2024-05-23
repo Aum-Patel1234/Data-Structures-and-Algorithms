@@ -46,6 +46,9 @@ class Heap<T extends Comparable<T>>{
         return 2 * i + 2;
     }
 
+    public int size(){
+        return list.size();
+    }
 
     public void insert(T element){
         list.add(element);
