@@ -3,10 +3,10 @@ package Graph;
 import java.util.ArrayList;
 
 abstract class graphStructure {
-    static class UnweightedEdge {
+    static class Edge {
         int src, dest;
 
-        UnweightedEdge(int src, int dest) {
+        Edge(int src, int dest) {
             this.src = src;
             this.dest = dest;
         }
