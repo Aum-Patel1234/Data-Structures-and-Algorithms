@@ -9,7 +9,6 @@ public class BFS extends graphStructure {
         ArrayList<WeightedEdge>[] graph = new ArrayList[7];
         createGraph(graph);
         BreadthFirstSearch(graph);
-
     }
 
     static void BreadthFirstSearch(ArrayList<WeightedEdge>[] graph) {
