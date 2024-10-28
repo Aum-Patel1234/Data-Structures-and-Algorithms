@@ -1,4 +1,5 @@
 # Default ignored files
-
+C++/learning.md
 .idea
 *.class
+*.exe
