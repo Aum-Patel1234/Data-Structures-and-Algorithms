@@ -7,6 +7,7 @@ This README provides an overview of the different data types in C++, including f
 C++ provides three main floating-point types to store decimal values:
 
 1. **`float`**: Single-precision floating-point number.
+
    - Precision: ~6-7 decimal digits.
    - Size: 4 bytes.
    - Example:
@@ -15,6 +16,7 @@ C++ provides three main floating-point types to store decimal values:
      ```
 
 2. **`double`**: Double-precision floating-point number.
+
    - Precision: ~15 decimal digits.
    - Size: 8 bytes.
    - Example:
@@ -35,6 +37,7 @@ C++ provides three main floating-point types to store decimal values:
 Integer types are used to store whole numbers:
 
 1. **`int`**: Standard integer.
+
    - Size: 4 bytes.
    - Example:
      ```cpp
@@ -42,6 +45,7 @@ Integer types are used to store whole numbers:
      ```
 
 2. **`long`**: Larger integer type.
+
    - Size: At least 4 bytes.
    - Example:
      ```cpp
@@ -49,6 +53,7 @@ Integer types are used to store whole numbers:
      ```
 
 3. **`long long`**: Even larger integer.
+
    - Size: 8 bytes.
    - Example:
      ```cpp
@@ -56,6 +61,7 @@ Integer types are used to store whole numbers:
      ```
 
 4. **`short`**: Shorter integer type.
+
    - Size: 2 bytes.
    - Example:
      ```cpp
@@ -73,6 +79,7 @@ Integer types are used to store whole numbers:
 These types offer guaranteed sizes and are available through `<cstdint>`:
 
 1. **`int32_t`**: 32-bit signed integer.
+
    - Example:
      ```cpp
      int32_t num = 42;
@@ -96,6 +103,7 @@ These types offer guaranteed sizes and are available through `<cstdint>`:
 ## Character Types
 
 1. **`char`**: Stores a single character.
+
    - Size: 1 byte.
    - Example:
      ```cpp

@@ -1,2 +1,3 @@
 # Data Structures and Algorithms
-```Learning Data structures and exploring different Technologies```
+
+`Learning Data structures and exploring different Technologies`
