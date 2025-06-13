@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/bfs.dir/link.d CMakeFiles/bfs.dir/graph/bfs.cpp.o -o bfs  libmake_graph_lib.a

@@ -1,2 +1,0 @@
-/usr/bin/ar qc libmake_graph_lib.a CMakeFiles/make_graph_lib.dir/graph/make_graph/make_graph.cpp.o
-/usr/bin/ranlib libmake_graph_lib.a
