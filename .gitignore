@@ -4,3 +4,44 @@ C++/learning.md
 *.class
 *.exe
 *.out
+
+# VSCode settings
+.vscode/
+
+# Build directories
+build/
+bin/
+out/
+
+# Compiled C/C++ object files
+*.o
+*.obj
+
+# Compiled binary files
+*.exe
+*.out
+*.app
+
+# CMake files
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+compile_commands.json
+
+# Java compiled files
+*.class
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Backup files
+*~
+*.swp
+*.bak
+
+# OS files
+.DS_Store
+Thumbs.db
+
