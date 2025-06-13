@@ -4,7 +4,10 @@ project(DataStructures LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Include all folders for headers
+# 1) Place all executables in the build/ folder
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
+# 2) Header search paths
 include_directories(
     ${CMAKE_SOURCE_DIR}/graph/make_graph
     ${CMAKE_SOURCE_DIR}/graph
@@ -13,18 +16,42 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/imp
 )
 
-# Add make_graph as a library
+# 3) Build the graph‑construction library
 add_library(make_graph_lib
     graph/make_graph/make_graph.cpp
 )
 
-# Collect all main files (you can add more if you want)
-add_executable(dfs graph/dfs.cpp)
-target_link_libraries(dfs PRIVATE make_graph_lib)
+# 4) Grab every .cpp under the project
+file(GLOB_RECURSE ALL_CPP
+     RELATIVE ${CMAKE_SOURCE_DIR}
+     "*.cpp"
+)
 
-add_executable(bfs graph/bfs.cpp)
-target_link_libraries(bfs PRIVATE make_graph_lib)
+# 5) For each .cpp, if it has main(), build an executable
+foreach(SRC IN LISTS ALL_CPP)
+    # Skip the library source
+    if(SRC MATCHES "^graph/make_graph/make_graph\\.cpp$")
+        continue()
+    endif()
 
-add_executable(pair_example examples/pair_eg.cpp)
+    # Read file contents and check for a main()
+    file(READ ${CMAKE_SOURCE_DIR}/${SRC} CONTENTS)
+    string(FIND "${CONTENTS}" "main(" HAS_MAIN)
 
-add_executable(linked_list_example implementation/linked_list.cpp)
+    if(HAS_MAIN EQUAL -1)
+        # no main() → skip
+        continue()
+    endif()
+
+    # Derive exe name (filename without extension)
+    get_filename_component(EXE_NAME ${SRC} NAME_WE)
+
+    # Build it
+    add_executable(${EXE_NAME} ${SRC})
+
+    # If it's in graph/, link the graph lib
+    if(SRC MATCHES "^graph/.*\\.cpp$")
+        target_link_libraries(${EXE_NAME} PRIVATE make_graph_lib)
+    endif()
+endforeach()
+
