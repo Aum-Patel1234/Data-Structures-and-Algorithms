@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/linked_list_example.dir/link.d CMakeFiles/linked_list_example.dir/implementation/linked_list.cpp.o -o linked_list_example

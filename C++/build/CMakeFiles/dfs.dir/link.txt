@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/dfs.dir/link.d CMakeFiles/dfs.dir/graph/dfs.cpp.o -o dfs  libmake_graph_lib.a
