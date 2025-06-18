@@ -5,5 +5,6 @@
 using namespace std;
 
 vector<vector<int>> createExampleGraph();
+vector<vector<int>> createExampleGraphNoCycle();
 
 #endif // GRAPH_EXAMPLE_H

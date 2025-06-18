@@ -20,3 +20,20 @@ vector<vector<int>> createExampleGraph() {
 
   return adj;
 }
+
+// Example graph without a cycle:
+// 0 -- 1    3
+// |    |
+// 4    2
+
+vector<vector<int>> createExampleGraphNoCycle() {
+  vector<vector<int>> adj = {
+      {1, 4}, // Neighbors of node 0
+      {0, 2}, // Neighbors of node 1
+      {1},    // Neighbors of node 2
+      {},     // Neighbors of node 3 (isolated node)
+      {0}     // Neighbors of node 4
+  };
+
+  return adj;
+}
