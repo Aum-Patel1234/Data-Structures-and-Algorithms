@@ -1,45 +1,58 @@
+#include "main.hpp"
 #include <iostream>
 #include <queue>
 
-class Stack {
-private:
-  int *arr;
-  int size;
-  int capacity;
+Stack::Stack() {
+  size = 0;
+  capacity = 10;
+  arr = new int[10];
+}
+Stack::~Stack() { delete arr; }
 
-public:
-  Stack() {
-    size = 0;
-    capacity = 10;
-    arr = new int[10];
-  }
-  ~Stack() { delete arr; }
-
-  void push(int x) {
-    if (size == capacity) {
-      capacity *= 2;
-      int *newArr = new int[capacity];
-      for (int i = 0; i < size; i++) {
-        newArr[i] = arr[i];
-      }
-      delete[] arr;
-      arr = newArr;
+void Stack::push(int x) {
+  if (size == capacity) {
+    capacity *= 2;
+    int *newArr = new int[capacity];
+    for (int i = 0; i < size; i++) {
+      newArr[i] = arr[i];
     }
-    arr[size] = x;
-    size++;
+    delete[] arr;
+    arr = newArr;
+  }
+  arr[size] = x;
+  size++;
+}
+
+int Stack::pop() {
+  if (size == 0)
+    return -1;
+  size--;
+  return arr[size];
+}
+
+bool Stack::empty() const { return size == 0; }
+
+int Stack::top() const { return empty() ? -1 : arr[size - 1]; }
+
+int main() {
+  std::cout << "---- Stack Impelentation ----\n";
+  Stack st;
+  st.push(10);
+  st.push(20);
+  st.push(30);
+
+  std::cout << "Top element: " << st.top() << "\n";   // 30
+  std::cout << "Pop: " << st.pop() << "\n";           // 30
+  std::cout << "Top after pop: " << st.top() << "\n"; // 20
+
+  while (!st.empty()) {
+    std::cout << "Popping: " << st.pop() << "\n";
   }
 
-  int pop() {
-    if (size == 0)
-      return -1;
-    size--;
-    return arr[size];
-  }
+  std::cout << "Stack empty? " << (st.empty() ? "Yes" : "No") << "\n";
 
-  bool empty() { return size == 0; }
-
-  int top() { return empty() ? -1 : arr[size - 1]; }
-};
+  return 0;
+}
 
 // NOTE: stack using queue
 class MyStack {
@@ -90,23 +103,3 @@ public:
  * int param_3 = obj->top();
  * bool param_4 = obj->empty();
  */
-
-int main() {
-  std::cout << "---- Stack Impelentation ----\n";
-  Stack st;
-  st.push(10);
-  st.push(20);
-  st.push(30);
-
-  std::cout << "Top element: " << st.top() << "\n";   // 30
-  std::cout << "Pop: " << st.pop() << "\n";           // 30
-  std::cout << "Top after pop: " << st.top() << "\n"; // 20
-
-  while (!st.empty()) {
-    std::cout << "Popping: " << st.pop() << "\n";
-  }
-
-  std::cout << "Stack empty? " << (st.empty() ? "Yes" : "No") << "\n";
-
-  return 0;
-}
