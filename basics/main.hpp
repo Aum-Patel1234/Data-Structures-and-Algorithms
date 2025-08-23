@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
@@ -65,5 +66,39 @@ public:
   void reverse();
   int length();
   void display();
+};
+
+// ---------------- Deque ----------------
+struct DequeNode {
+  int val;
+  DequeNode *prev;
+  DequeNode *next;
+  DequeNode(int v);
+};
+
+class Deque {
+private:
+  DequeNode *front;
+  DequeNode *back;
+  int size;
+
+public:
+  Deque();
+  ~Deque();
+
+  void pushFront(int x);
+  void pushBack(int x);
+
+  void popFront();
+  void popBack();
+
+  int getFront();
+  int getBack();
+
+  bool isEmpty();
+  int getSize();
+  void clear();
+  void display();
+  std::vector<int> toVector();
 };
 #endif // MAIN_HPP

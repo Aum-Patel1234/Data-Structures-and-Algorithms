@@ -11,4 +11,18 @@ when we say new ABC[100], compiler can get the information about how many object
 but correspondingly if we simply use delete ptr for this case, compiler will not know how many objects that ptr is pointing to and will end up calling of destructor and deleting memory for only 1 object(leaving the invocation of destructors and deallocation of remaining 99 objects). Hence there will be a memory leak.
 
 link - https://stackoverflow.com/questions/2425728/what-is-the-difference-between-delete-and-delete
-----
+
+--------------------------
+
+⚠️ XOR Swap Caveat:
+The XOR swap trick works fine when swapping two different indices.  
+But if `i == j` (same index), the operations do this:
+
+arr[i] = arr[i] ^ arr[i];   // → 0
+arr[i] = arr[i] ^ arr[i];   // → 0
+arr[i] = arr[i] ^ arr[i];   // → 0
+
+So the element becomes 0 instead of staying the same.  
+👉 Therefore, always check `if (i != j)` before using XOR swap.
+
+-------------------------
