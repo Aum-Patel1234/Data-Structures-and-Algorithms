@@ -1,5 +1,7 @@
+#include <algorithm>
 #include <functional>
 #include <iostream>
+#include <iterator>
 #include <string>
 #include <vector>
 
@@ -12,6 +14,7 @@ void swap(std::vector<int> &arr, int i, int j) {
 }
 
 void bubbleSort(std::vector<int> &arr) {
+  // NOTE: space - O(1), time = O(n^2)
   int n = arr.size();
   for (int i = 0; i < n; i++) {
     bool flag = true;
@@ -26,6 +29,7 @@ void bubbleSort(std::vector<int> &arr) {
   }
 }
 void selectionSort(std::vector<int> &arr) {
+  // NOTE: space - O(1), time = O(n^2)
   int n = arr.size(), min = 0;
   for (int i = 0; i < n; i++) {
     int minVal = arr[i];
@@ -39,10 +43,39 @@ void selectionSort(std::vector<int> &arr) {
       swap(arr, i, min);
   }
 }
-void insertionSort(std::vector<int> &arr) {}
-void mergeSort(std::vector<int> &arr, int left, int right) {}
-void quickSort(std::vector<int> &arr, int low, int high) {}
-void countingSort(std::vector<int> &arr) {}
+void insertionSort(std::vector<int> &arr) {
+  // NOTE: space - O(1), time = O(n^2)
+  int n = arr.size();
+  for (int i = 1; i < n; i++) {
+    for (int j = i; j > 0; j--) {
+      if (arr[j] < arr[j - 1])
+        swap(arr, j, j - 1);
+      else
+        break;
+    }
+  }
+}
+void mergeSort(std::vector<int> &arr, int left, int right) {
+  // NOTE: space - O(n), time = O(n.log(n))
+}
+void quickSort(std::vector<int> &arr, int low, int high) {
+  // NOTE: space - O(1), time = O(n.log(n))
+}
+void countingSort(std::vector<int> &arr) {
+  // NOTE: this is only for positive nums for neg take min and max and shift it
+  // space - O(k), O(n + k), where n = number of elements, k is the max element
+  return;
+  int max = *std::max_element(arr.begin(), arr.end());
+  std::vector<int> freq(max + 1, 0);
+
+  for (int num : arr)
+    freq[num]++;
+
+  for (int i = 0, j = 0; i <= max; i++) {
+    while (freq[i]-- > 0)
+      arr[j++] = i;
+  }
+}
 
 // helper that compares vectors
 static bool equalVec(const std::vector<int> &a, const std::vector<int> &b) {
