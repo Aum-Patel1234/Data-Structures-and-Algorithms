@@ -55,16 +55,61 @@ void insertionSort(std::vector<int> &arr) {
     }
   }
 }
+
+std::vector<int> merge(std::vector<int> &arr1, std::vector<int> &arr2) {
+  std::vector<int> combine;
+  int i = 0, j = 0, m = arr1.size(), n = arr2.size();
+  while (i < m && j < n) {
+    if (arr1[i] < arr2[j])
+      combine.emplace_back(arr1[i++]);
+    else
+      combine.emplace_back(arr2[j++]);
+  }
+  while (i < m)
+    combine.emplace_back(arr1[i++]);
+  while (j < n)
+    combine.emplace_back(arr2[j++]);
+  return combine;
+}
 void mergeSort(std::vector<int> &arr, int left, int right) {
   // NOTE: space - O(n), time = O(n.log(n))
+  if (left >= right)
+    return;
+  int mid = left + (right - left) / 2;
+
+  std::vector<int> firstHalf(arr.begin() + left, arr.begin() + mid + 1);
+  std::vector<int> secondHalf(arr.begin() + mid + 1, arr.begin() + right + 1);
+  mergeSort(firstHalf, 0, firstHalf.size() - 1);
+  mergeSort(secondHalf, 0, secondHalf.size() - 1);
+  arr = merge(firstHalf, secondHalf);
 }
+
 void quickSort(std::vector<int> &arr, int low, int high) {
   // NOTE: space - O(1), time = O(n.log(n))
+  if (low >= high)
+    return;
+  int i = low, j = high;
+  int m = i + (j - i) / 2;
+  int mid = arr[m];
+  while (i <= j) {
+    while (arr[i] < mid)
+      i++;
+    while (arr[j] > mid)
+      j--;
+    if (i <= j) {
+      swap(arr, i, j);
+      i++;
+      j--;
+    }
+  }
+  quickSort(arr, low, j);
+  quickSort(arr, i, high);
 }
 void countingSort(std::vector<int> &arr) {
   // NOTE: this is only for positive nums for neg take min and max and shift it
   // space - O(k), O(n + k), where n = number of elements, k is the max element
-  return;
+  if (arr.size() == 0)
+    return;
   int max = *std::max_element(arr.begin(), arr.end());
   std::vector<int> freq(max + 1, 0);
 

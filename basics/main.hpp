@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 #ifndef MAIN_HPP
 #define MAIN_HPP
@@ -100,5 +101,31 @@ public:
   void clear();
   void display();
   std::vector<int> toVector();
+};
+
+// ---------------- Trie ----------------
+struct TrieNode {
+  TrieNode *children[26]; // Fixed size for 'a' to 'z'
+  bool flag;
+
+  TrieNode *assign(int idx);
+  bool isEnd();
+  TrieNode *get(int idx);
+  void setEnd(bool v);
+  TrieNode();
+};
+class Trie {
+private:
+  TrieNode *root;
+
+public:
+  Trie();
+  ~Trie();
+
+  void insert(const std::string &word);
+  bool search(const std::string &word) const;
+  bool startsWith(const std::string &prefix) const;
+  // TODO:
+  // bool remove(const std::string &word);
 };
 #endif // MAIN_HPP
