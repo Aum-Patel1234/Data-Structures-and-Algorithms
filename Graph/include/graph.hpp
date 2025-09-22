@@ -33,6 +33,17 @@ const std::vector<std::pair<int, int>> edges = {{0, 1}, {0, 2}, {1, 2}, {1, 3},
 const std::vector<std::pair<int, int>> edges1 = {
     {0, 1}, {0, 2}, {1, 3}, {2, 4}, {2, 5}};
 
+const std::vector<std::pair<int, int>> edgesEvenCycle = {
+    {0, 1}, {1, 2}, {2, 3}, {3, 0}, // square cycle (0-1-2-3-0)
+    {2, 4}, {4, 5}                  // chain extension (extra nodes 4 and 5)
+};
+
+//
+// 0 ----- 1
+// |       |
+// |       |
+// 3 ----- 2 ---- 4 ---- 5
+
 } // namespace graph_data
 
 class Graph {
@@ -41,11 +52,17 @@ private:
                  std::vector<int> &dfs, std::vector<bool> &vis, int i);
   bool detectCycleHelper(const std::vector<std::vector<int>> &graph,
                          std::vector<bool> &vis, int curr, int parent);
+  bool isBipartiteDFSHelper(const std::vector<std::vector<int>> &graph,
+                            std::vector<int> &color, int curr,
+                            int currentColor);
 
 public:
   std::vector<int> bfs(std::vector<std::vector<int>> &graph);
   std::vector<int> dfs(std::vector<std::vector<int>> &graph);
-  bool detectCycle(std::vector<std::vector<int>> &graph);
+  bool detectCycleDFS(std::vector<std::vector<int>> &graph);
+  bool detectCycleBFS(std::vector<std::vector<int>> &graph);
+  bool isBipartiteBFS(std::vector<std::vector<int>> &graph);
+  bool isBipartiteDFS(std::vector<std::vector<int>> &graph);
 };
 
 #endif
