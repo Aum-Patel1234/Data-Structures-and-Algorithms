@@ -43,6 +43,11 @@ const std::vector<std::pair<int, int>> edgesEvenCycle = {
 // |       |
 // |       |
 // 3 ----- 2 ---- 4 ---- 5
+const std::vector<std::pair<int, int>> edgesDirectedCycle = {
+    {0, 1}, {1, 2}, {2, 0}, // cycle: 0 -> 1 -> 2 -> 0
+    {2, 3}, {3, 4},         // chain from the cycle
+    {4, 2} // another back edge forming a cycle: 2 -> 3 -> 4 -> 2
+};
 
 } // namespace graph_data
 
@@ -55,12 +60,16 @@ private:
   bool isBipartiteDFSHelper(const std::vector<std::vector<int>> &graph,
                             std::vector<int> &color, int curr,
                             int currentColor);
+  bool hasCycleDirectedGraph(const std::vector<std::vector<int>> &graph,
+                             std::vector<bool> &vis, std::vector<bool> &pathVis,
+                             int curr);
 
 public:
   std::vector<int> bfs(std::vector<std::vector<int>> &graph);
   std::vector<int> dfs(std::vector<std::vector<int>> &graph);
   bool detectCycleDFS(std::vector<std::vector<int>> &graph);
   bool detectCycleBFS(std::vector<std::vector<int>> &graph);
+  bool detectCycleDirectedGraph(std::vector<std::vector<int>> &graph);
   bool isBipartiteBFS(std::vector<std::vector<int>> &graph);
   bool isBipartiteDFS(std::vector<std::vector<int>> &graph);
 };

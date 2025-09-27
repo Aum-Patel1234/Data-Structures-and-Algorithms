@@ -51,6 +51,39 @@ bool Graph::detectCycleBFS(std::vector<std::vector<int>> &graph) {
   return false;
 }
 
+// NOTE: directedGraph cycle
+
+bool Graph::hasCycleDirectedGraph(const std::vector<std::vector<int>> &graph,
+                                  std::vector<bool> &vis,
+                                  std::vector<bool> &pathVis, int curr) {
+  vis[curr] = true;
+  pathVis[curr] = true;
+
+  for (auto &neighbor : graph[curr]) {
+    if (!vis[neighbor]) {
+      if (hasCycleDirectedGraph(graph, vis, pathVis, neighbor))
+        return true;
+    } else if (pathVis[neighbor])
+      return true;
+  }
+
+  pathVis[curr] = false;
+  return false;
+}
+
+bool Graph::detectCycleDirectedGraph(std::vector<std::vector<int>> &graph) {
+  const int V = graph_data::num_nodes;
+  std::vector<bool> vis(V, false);
+  std::vector<bool> pathVis(V, false);
+  for (int i = 0; i < V; i++) {
+    if (!vis[i]) {
+      if (hasCycleDirectedGraph(graph, vis, pathVis, i))
+        return true;
+    }
+  }
+  return false;
+}
+
 int main() {
   std::vector<std::vector<int>> graph(graph_data::num_nodes);
   for (auto &edge : graph_data::edges) {
@@ -63,16 +96,36 @@ int main() {
     graph[edge.second].emplace_back(edge.first);
   }
 
+  std::vector<std::vector<int>> directedGraph(graph_data::num_nodes);
+  for (auto &edge : graph_data::edges)
+    directedGraph[edge.first].emplace_back(edge.second);
+
+  std::vector<std::vector<int>> directedGraph1(graph_data::num_nodes);
+  for (auto &edge : graph_data::edges1)
+    directedGraph1[edge.first].emplace_back(edge.second);
+
+  std::vector<std::vector<int>> directedGraph2(graph_data::num_nodes);
+  for (auto &edge : graph_data::edgesDirectedCycle)
+    directedGraph2[edge.first].emplace_back(edge.second);
+
   Graph g;
   std::cout << "The graph edges contains cycle (DFS) - "
             << g.detectCycleDFS(graph) << std::endl;
   std::cout << "The graph edges1 contains cycle (DFS) - "
             << g.detectCycleDFS(graph1) << std::endl
             << std::endl;
-  std::cout << "The graph edges contains cycle (BFS) -"
+  std::cout << "The graph edges contains cycle (BFS) - "
             << g.detectCycleBFS(graph) << std::endl;
-  std::cout << "The graph edges1 contains cycle (BFS) -"
-            << g.detectCycleBFS(graph1) << std::endl;
+  std::cout << "The graph edges1 contains cycle (BFS) - "
+            << g.detectCycleBFS(graph1) << std::endl
+            << std::endl;
+
+  std::cout << "The directedGraph contains cycle - "
+            << g.detectCycleDirectedGraph(directedGraph) << std::endl;
+  std::cout << "The directedGraph1 contains cycle - "
+            << g.detectCycleDirectedGraph(directedGraph1) << std::endl;
+  std::cout << "The directedGraph2 contains cycle - "
+            << g.detectCycleDirectedGraph(directedGraph2) << std::endl;
 
   return 0;
 }
