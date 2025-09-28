@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stack>
 #ifndef GRAPH_H
 #define GRAPH_H
 #include <utility> // Required for std::pair
@@ -38,6 +39,9 @@ const std::vector<std::pair<int, int>> edgesEvenCycle = {
     {2, 4}, {4, 5}                  // chain extension (extra nodes 4 and 5)
 };
 
+const std::vector<std::pair<int, int>> edgesDAG = {{0, 1}, {0, 2}, {1, 3},
+                                                   {2, 3}, {3, 4}, {2, 5}};
+
 //
 // 0 ----- 1
 // |       |
@@ -63,10 +67,13 @@ private:
   bool hasCycleDirectedGraph(const std::vector<std::vector<int>> &graph,
                              std::vector<bool> &vis, std::vector<bool> &pathVis,
                              int curr);
+  void topoSortDFS(std::vector<std::vector<int>> &graph, std::vector<bool> &vis,
+                   std::stack<int> &stk, int i);
 
 public:
   std::vector<int> bfs(std::vector<std::vector<int>> &graph);
   std::vector<int> dfs(std::vector<std::vector<int>> &graph);
+  std::vector<int> topoSort(std::vector<std::vector<int>> &graph);
   bool detectCycleDFS(std::vector<std::vector<int>> &graph);
   bool detectCycleBFS(std::vector<std::vector<int>> &graph);
   bool detectCycleDirectedGraph(std::vector<std::vector<int>> &graph);
