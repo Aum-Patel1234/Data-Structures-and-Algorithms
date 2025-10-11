@@ -1,0 +1,51 @@
+name: C++ Build CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-cpp-projects:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install CMake and build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential
+
+      - name: Build C++ folder
+        run: |
+          if [ -d "C++" ]; then
+            mkdir -p C++/build
+            cd C++/build
+            cmake ..
+            cmake --build .
+          else
+            echo "'C++' directory not found"
+          fi
+
+      - name: Build Graph folder
+        run: |
+          if [ -d "Graph" ]; then
+            mkdir -p Graph/build
+            cd Graph/build
+            cmake ..
+            cmake --build .
+          else
+            echo "'Graph' directory not found"
+          fi
+
+      - name: Build DynamicProgramming folder
+        run: |
+          if [ -d "DynamicProgramming" ]; then
+            mkdir -p DynamicProgramming/build
+            cd DynamicProgramming/build
+            cmake ..
+            cmake --build .
+          else
+            echo "'DynamicProgramming' directory not found"
+          fi
