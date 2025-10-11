@@ -49,6 +49,35 @@ std::vector<int> Graph::kahnSort(std::vector<std::vector<int>> &graph) {
   return sorted;
 }
 
+bool Graph::detectCycleDirectedGraphKahnAlgo(
+    std::vector<std::vector<int>> &graph) {
+  const int V = graph_data::num_nodes;
+  std::vector<int> indegree(V);
+  std::queue<int> q;
+  int vis = 0;
+  for (int i = 0; i < V; i++) {
+    for (auto &edge : graph[i])
+      indegree[edge]++;
+  }
+  for (int i = 0; i < V; i++) {
+    if (indegree[i] == 0)
+      q.push(i);
+  }
+  while (!q.empty()) {
+    int curr = q.front();
+    vis++;
+    q.pop();
+    for (auto &neighbor : graph[curr]) {
+      indegree[neighbor]--;
+      if (indegree[neighbor] == 0)
+        q.push(neighbor);
+    }
+  }
+  std::cout << "The topoSort visited " << vis << " nodes and total are " << V
+            << ".\n";
+  return vis < V;
+}
+
 int main() {
   auto &edges = graph_data::edgesDAG;
 
@@ -61,7 +90,20 @@ int main() {
   std::cout << "Kahn Sort(BFS): ";
   for (int &x : sorted)
     std::cout << x << " ";
-  std::cout << "\n";
+  std::cout << "\n\n";
+
+  std::vector<std::vector<int>> directedGraph1(graph_data::num_nodes);
+  for (auto &edge : graph_data::edges1)
+    directedGraph1[edge.first].emplace_back(edge.second);
+
+  std::vector<std::vector<int>> directedGraph2(graph_data::num_nodes);
+  for (auto &edge : graph_data::edgesDirectedCycle)
+    directedGraph2[edge.first].emplace_back(edge.second);
+
+  bool ans1 = g.detectCycleDirectedGraphKahnAlgo(directedGraph1),
+       ans2 = g.detectCycleDirectedGraphKahnAlgo(directedGraph2);
+  std::cout << "The directedGraph1 contains cycle - " << ans1 << std::endl;
+  std::cout << "The directedGraph2 contains cycle - " << ans2 << std::endl;
 
   return 0;
 }

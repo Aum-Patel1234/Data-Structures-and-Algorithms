@@ -75,6 +75,7 @@ public:
   std::vector<int> dfs(std::vector<std::vector<int>> &graph);
   std::vector<int> topoSort(std::vector<std::vector<int>> &graph);
   std::vector<int> kahnSort(std::vector<std::vector<int>> &graph);
+  bool detectCycleDirectedGraphKahnAlgo(std::vector<std::vector<int>> &graph);
   bool detectCycleDFS(std::vector<std::vector<int>> &graph);
   bool detectCycleBFS(std::vector<std::vector<int>> &graph);
   bool detectCycleDirectedGraph(std::vector<std::vector<int>> &graph);
