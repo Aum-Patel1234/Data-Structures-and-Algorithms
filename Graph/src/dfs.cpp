@@ -1,30 +1,26 @@
 #include "../include/graph.hpp"
-#include <iostream>
-#include <vector>
 
-std::vector<int> Graph::dfs(std::vector<std::vector<int>> &graph) {
+std::vector<int> Graph::dfs(std::vector<std::vector<int>>& graph) {
   std::vector<int> dfs;
   std::vector<bool> vis(graph_data::num_nodes, false);
   for (int i = 0; i < graph_data::num_nodes; i++) {
-    if (!vis[i])
-      dfsHelper(graph, dfs, vis, i);
+    if (!vis[i]) dfsHelper(graph, dfs, vis, i);
   }
   return dfs;
 }
 
-void Graph::dfsHelper(const std::vector<std::vector<int>> &graph,
-                      std::vector<int> &dfs, std::vector<bool> &vis, int idx) {
+void Graph::dfsHelper(const std::vector<std::vector<int>>& graph, std::vector<int>& dfs, std::vector<bool>& vis,
+                      int idx) {
   vis[idx] = true;
   dfs.emplace_back(idx);
   for (int neighbor : graph[idx]) {
-    if (!vis[neighbor])
-      dfsHelper(graph, dfs, vis, neighbor);
+    if (!vis[neighbor]) dfsHelper(graph, dfs, vis, neighbor);
   }
 }
 
 int main() {
   std::vector<std::vector<int>> graph(graph_data::num_nodes);
-  for (auto &edge : graph_data::edges) {
+  for (auto& edge : graph_data::edges) {
     graph[edge.first].emplace_back(edge.second);
     graph[edge.second].emplace_back(edge.first);
   }

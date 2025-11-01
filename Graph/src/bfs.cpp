@@ -1,15 +1,11 @@
 #include "../include/graph.hpp"
-#include <iostream>
-#include <queue>
-#include <vector>
 
-std::vector<int> Graph::bfs(std::vector<std::vector<int>> &graph) {
+std::vector<int> Graph::bfs(std::vector<std::vector<int>>& graph) {
   std::queue<int> queue;
   std::vector<int> bfs;
   std::vector<bool> vis(graph_data::num_nodes, false);
   for (int i = 0; i < graph_data::num_nodes; i++) {
-    if (vis[i])
-      continue;
+    if (vis[i]) continue;
     vis[i] = true;
     queue.push(i);
     while (!queue.empty()) {
@@ -32,7 +28,7 @@ std::vector<int> Graph::bfs(std::vector<std::vector<int>> &graph) {
 
 int main() {
   std::vector<std::vector<int>> graph(graph_data::num_nodes);
-  for (auto &edge : graph_data::edges) {
+  for (auto& edge : graph_data::edges) {
     graph[edge.first].emplace_back(edge.second);
     graph[edge.second].emplace_back(edge.first);
   }

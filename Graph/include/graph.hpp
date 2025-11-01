@@ -2,6 +2,8 @@
 
 #include <climits>
 #include <cstdint>
+#include <iostream>
+#include <queue>
 #include <stack>
 #ifndef GRAPH_H
 #define GRAPH_H
@@ -75,6 +77,7 @@ class Graph {
   std::vector<int> topoSort(std::vector<std::vector<int>>& graph);
   std::vector<int> kahnSort(std::vector<std::vector<int>>& graph);
   std::vector<int> shortestPathFromSrcDAG(int V, int E, const std::vector<std::vector<int>>& edges);
+  std::vector<int> shortestPathFromSrc(const std::vector<std::vector<int>>& adj, int src);
   bool detectCycleDirectedGraphKahnAlgo(std::vector<std::vector<int>>& graph);
   bool detectCycleDFS(std::vector<std::vector<int>>& graph);
   bool detectCycleBFS(std::vector<std::vector<int>>& graph);

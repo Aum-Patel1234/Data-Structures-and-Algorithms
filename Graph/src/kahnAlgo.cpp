@@ -1,7 +1,4 @@
 #include "../include/graph.hpp"
-#include <iostream>
-#include <queue>
-#include <vector>
 
 /*
  NOTE: Topological Sort
@@ -17,21 +14,19 @@
   2. 1->2->3->1 : here 1->3 and 3->1 so does not work
 */
 
-std::vector<int> Graph::kahnSort(std::vector<std::vector<int>> &graph) {
+std::vector<int> Graph::kahnSort(std::vector<std::vector<int>>& graph) {
   const int V = graph_data::num_nodes;
   std::queue<int> q;
   std::vector<int> indegree(V, 0);
   std::vector<bool> vis(V, false);
   for (int i = 0; i < graph.size(); i++) {
-    for (int &edge : graph[i])
-      indegree[edge]++;
+    for (int& edge : graph[i]) indegree[edge]++;
   }
 
   std::vector<int> sorted;
   for (int i = 0; i < indegree.size(); i++) {
     // std::cout<<i<<" - "<<indegree[i]<<std::endl;
-    if (indegree[i] == 0)
-      q.push(i);
+    if (indegree[i] == 0) q.push(i);
   }
 
   while (!q.empty()) {
@@ -39,66 +34,56 @@ std::vector<int> Graph::kahnSort(std::vector<std::vector<int>> &graph) {
     sorted.push_back(curr);
     q.pop();
 
-    for (int &neighbor : graph[curr]) {
+    for (int& neighbor : graph[curr]) {
       indegree[neighbor]--;
-      if (indegree[neighbor] == 0)
-        q.push(neighbor);
+      if (indegree[neighbor] == 0) q.push(neighbor);
     }
   }
 
   return sorted;
 }
 
-bool Graph::detectCycleDirectedGraphKahnAlgo(
-    std::vector<std::vector<int>> &graph) {
+bool Graph::detectCycleDirectedGraphKahnAlgo(std::vector<std::vector<int>>& graph) {
   const int V = graph_data::num_nodes;
   std::vector<int> indegree(V);
   std::queue<int> q;
   int vis = 0;
   for (int i = 0; i < V; i++) {
-    for (auto &edge : graph[i])
-      indegree[edge]++;
+    for (auto& edge : graph[i]) indegree[edge]++;
   }
   for (int i = 0; i < V; i++) {
-    if (indegree[i] == 0)
-      q.push(i);
+    if (indegree[i] == 0) q.push(i);
   }
   while (!q.empty()) {
     int curr = q.front();
     vis++;
     q.pop();
-    for (auto &neighbor : graph[curr]) {
+    for (auto& neighbor : graph[curr]) {
       indegree[neighbor]--;
-      if (indegree[neighbor] == 0)
-        q.push(neighbor);
+      if (indegree[neighbor] == 0) q.push(neighbor);
     }
   }
-  std::cout << "The topoSort visited " << vis << " nodes and total are " << V
-            << ".\n";
+  std::cout << "The topoSort visited " << vis << " nodes and total are " << V << ".\n";
   return vis < V;
 }
 
 int main() {
-  auto &edges = graph_data::edgesDAG;
+  auto& edges = graph_data::edgesDAG;
 
   std::vector<std::vector<int>> graph(graph_data::num_nodes);
-  for (auto &edge : edges)
-    graph[edge.first].push_back(edge.second);
+  for (auto& edge : edges) graph[edge.first].push_back(edge.second);
 
   Graph g;
   std::vector<int> sorted = g.kahnSort(graph);
   std::cout << "Kahn Sort(BFS): ";
-  for (int &x : sorted)
-    std::cout << x << " ";
+  for (int& x : sorted) std::cout << x << " ";
   std::cout << "\n\n";
 
   std::vector<std::vector<int>> directedGraph1(graph_data::num_nodes);
-  for (auto &edge : graph_data::edges1)
-    directedGraph1[edge.first].emplace_back(edge.second);
+  for (auto& edge : graph_data::edges1) directedGraph1[edge.first].emplace_back(edge.second);
 
   std::vector<std::vector<int>> directedGraph2(graph_data::num_nodes);
-  for (auto &edge : graph_data::edgesDirectedCycle)
-    directedGraph2[edge.first].emplace_back(edge.second);
+  for (auto& edge : graph_data::edgesDirectedCycle) directedGraph2[edge.first].emplace_back(edge.second);
 
   bool ans1 = g.detectCycleDirectedGraphKahnAlgo(directedGraph1),
        ans2 = g.detectCycleDirectedGraphKahnAlgo(directedGraph2);

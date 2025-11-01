@@ -1,7 +1,4 @@
 #include "../include/graph.hpp"
-#include <iostream>
-#include <stack>
-#include <vector>
 
 /*
  NOTE: Topological Sort
@@ -17,26 +14,23 @@
   2. 1->2->3->1 : here 1->3 and 3->1 so does not work
 */
 
-void Graph::topoSortDFS(std::vector<std::vector<int>> &graph,
-                        std::vector<bool> &vis, std::stack<int> &stk, int i) {
+void Graph::topoSortDFS(std::vector<std::vector<int>>& graph, std::vector<bool>& vis, std::stack<int>& stk, int i) {
   vis[i] = true;
 
-  for (int &neighbor : graph[i]) {
-    if (!vis[neighbor])
-      topoSortDFS(graph, vis, stk, neighbor);
+  for (int& neighbor : graph[i]) {
+    if (!vis[neighbor]) topoSortDFS(graph, vis, stk, neighbor);
   }
 
   stk.push(i);
 }
 
-std::vector<int> Graph::topoSort(std::vector<std::vector<int>> &graph) {
+std::vector<int> Graph::topoSort(std::vector<std::vector<int>>& graph) {
   const int V = graph_data::num_nodes;
   std::stack<int> stk;
   std::vector<bool> vis(V, false);
 
   for (int i = 0; i < V; i++) {
-    if (!vis[i])
-      topoSortDFS(graph, vis, stk, i);
+    if (!vis[i]) topoSortDFS(graph, vis, stk, i);
   }
 
   std::vector<int> topologicalSort(stk.size());
@@ -49,17 +43,15 @@ std::vector<int> Graph::topoSort(std::vector<std::vector<int>> &graph) {
 }
 
 int main() {
-  auto &edges = graph_data::edgesDAG;
+  auto& edges = graph_data::edgesDAG;
 
   std::vector<std::vector<int>> graph(graph_data::num_nodes);
-  for (auto &edge : edges)
-    graph[edge.first].push_back(edge.second);
+  for (auto& edge : edges) graph[edge.first].push_back(edge.second);
 
   Graph g;
   std::vector<int> sorted = g.topoSort(graph);
   std::cout << "Topological Sort: ";
-  for (int &x : sorted)
-    std::cout << x << " ";
+  for (int& x : sorted) std::cout << x << " ";
   std::cout << "\n";
 
   return 0;
