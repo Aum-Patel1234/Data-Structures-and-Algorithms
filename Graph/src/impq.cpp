@@ -39,6 +39,55 @@ int ladderLength(std::string beginWord, std::string endWord, std::vector<std::st
   return 0;
 }
 
+// first way
+std::vector<std::vector<std::string>> findLadders(std::string beginWord, std::string endWord,
+                                                  std::vector<std::string>& wordList) {
+  std::vector<std::vector<std::string>> ans;
+  std::unordered_set<std::string> s(wordList.begin(), wordList.end());
+  if (s.find(endWord) == s.end()) return ans;
+
+  std::queue<std::vector<std::string>> q;
+  std::vector<std::string> used;
+  used.push_back(beginWord);
+  q.push({beginWord});
+  const char chars[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
+  bool found = false;
+  while (!q.empty() && !found) {
+    int size = q.size();
+    for (auto& w : used) s.erase(w);
+    used.clear();
+
+    for (int i = 0; i < size; i++) {
+      auto curr = q.front();
+      q.pop();
+      auto& word = curr.back();
+      if (word == endWord) {
+        ans.push_back(curr);
+        found = true;
+        continue;
+      }
+
+      for (int j = 0; j < word.size(); j++) {
+        auto copy = word;
+        for (auto& ch : chars) {
+          if (ch == copy[j]) continue;
+          copy[j] = ch;
+          if (s.find(copy) != s.end()) {
+            auto next = curr;
+            next.push_back(copy);
+            q.push(next);
+            used.push_back(copy);
+          }
+        }
+      }
+    }
+  }
+
+  return ans;
+}
+
 int main() {
   {
     std::string beginWord = "hit", endWord = "cog";
@@ -72,6 +121,41 @@ int main() {
     std::cout << "Begin: " << beginWord << ", End: " << endWord << std::endl;
     std::cout << "Expected: 3 (talk -> tall -> tail)" << std::endl;
     std::cout << "Output:   " << ladderLength(beginWord, endWord, wordList) << std::endl;
+  }
+
+  std::cout << "\n\nWord Ladder 2:\n\n";
+
+  {
+    std::string beginWord = "hit", endWord = "cog";
+    std::vector<std::string> wordList = {"hot", "dot", "dog", "lot", "log", "cog"};
+    std::cout << "Test 1:\n";
+    std::cout << "Begin: " << beginWord << ", End: " << endWord << std::endl;
+    std::cout << "Expected:\n";
+    std::cout << "  [hit, hot, dot, dog, cog]\n";
+    std::cout << "  [hit, hot, lot, log, cog]\n";
+    auto res = findLadders(beginWord, endWord, wordList);
+    std::cout << "Output:\n";
+    for (auto& path : res) {
+      for (auto& w : path) std::cout << w << " ";
+      std::cout << "\n";
+    }
+    std::cout << std::endl;
+  }
+
+  {
+    std::string beginWord = "talk", endWord = "tail";
+    std::vector<std::string> wordList = {"tall", "tail", "balk", "tulk", "tark"};
+    std::cout << "Test 2:\n";
+    std::cout << "Begin: " << beginWord << ", End: " << endWord << std::endl;
+    std::cout << "Expected:\n";
+    std::cout << "  [talk, tall, tail]\n";
+    auto res = findLadders(beginWord, endWord, wordList);
+    std::cout << "Output:\n";
+    for (auto& path : res) {
+      for (auto& w : path) std::cout << w << " ";
+      std::cout << "\n";
+    }
+    std::cout << std::endl;
   }
   return 0;
 }
