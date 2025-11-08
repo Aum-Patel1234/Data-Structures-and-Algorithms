@@ -1,11 +1,13 @@
+#include <bits/stdc++.h>
+
 #include <cstdint>
 #include <iostream>
 #include <queue>
 #include <string>
+#include <unordered_map>
 #include <unordered_set>
 #include <utility>
 #include <vector>
-
 int ladderLength(std::string beginWord, std::string endWord, std::vector<std::string>& wordList) {
   std::unordered_set<std::string> s(wordList.begin(), wordList.end());
   if (s.find(endWord) == s.end()) return 0;
@@ -88,6 +90,70 @@ std::vector<std::vector<std::string>> findLadders(std::string beginWord, std::st
   return ans;
 }
 
+// optimal way word ladder 2
+void dfs(std::vector<std::vector<std::string>>& ans, const std::unordered_map<std::string, uint16_t>& map,
+         const char (&chars)[26], std::vector<std::string>& vec, const std::string& beginWord) {
+  std::string curr = vec.back();
+  if (curr == beginWord) {
+    std::vector<std::string> temp = vec;
+    std::reverse(temp.begin(), temp.end());
+    ans.push_back(temp);
+    return;
+  }
+  for (int i = 0; i < curr.size(); i++) {
+    auto copy = curr;
+    for (auto& ch : chars) {
+      if (copy[i] == ch) continue;
+      copy[i] = ch;
+      if (map.find(copy) != map.end() && map.at(curr) == map.at(copy) + 1) {
+        vec.push_back(copy);
+        dfs(ans, map, chars, vec, beginWord);
+        vec.pop_back();
+      }
+    }
+  }
+}
+
+std::vector<std::vector<std::string>> findLaddersOptimal(std::string beginWord, std::string endWord,
+                                                         std::vector<std::string>& wordList) {
+  std::vector<std::vector<std::string>> ans;
+  std::unordered_map<std::string, uint16_t> map;
+  std::unordered_set<std::string> s(wordList.begin(), wordList.end());
+  if (s.find(endWord) == s.end()) return ans;
+
+  map[beginWord] = 0;
+  const char chars[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+  std::queue<std::string> q;
+  q.push(beginWord);
+  s.erase(beginWord);
+
+  while (!q.empty()) {
+    auto curr = q.front();
+    q.pop();
+
+    for (uint16_t i = 0; i < curr.size(); i++) {
+      auto copy = curr;
+      for (auto& ch : chars) {
+        if (copy[i] == ch) continue;
+        copy[i] = ch;
+        if (s.find(copy) != s.end()) {
+          map[copy] = map[curr] + 1;
+          s.erase(copy);
+          q.push(copy);
+        }
+      }
+    }
+  }
+
+  // for (auto& [key, val] : map) {
+  //   std::cout << key << " - " << val << std::endl;
+  // }
+  std::vector<std::string> path = {endWord};
+  dfs(ans, map, chars, path, beginWord);
+  return ans;
+}
+
 int main() {
   {
     std::string beginWord = "hit", endWord = "cog";
@@ -133,7 +199,7 @@ int main() {
     std::cout << "Expected:\n";
     std::cout << "  [hit, hot, dot, dog, cog]\n";
     std::cout << "  [hit, hot, lot, log, cog]\n";
-    auto res = findLadders(beginWord, endWord, wordList);
+    auto res = findLaddersOptimal(beginWord, endWord, wordList);
     std::cout << "Output:\n";
     for (auto& path : res) {
       for (auto& w : path) std::cout << w << " ";
@@ -149,7 +215,7 @@ int main() {
     std::cout << "Begin: " << beginWord << ", End: " << endWord << std::endl;
     std::cout << "Expected:\n";
     std::cout << "  [talk, tall, tail]\n";
-    auto res = findLadders(beginWord, endWord, wordList);
+    auto res = findLaddersOptimal(beginWord, endWord, wordList);
     std::cout << "Output:\n";
     for (auto& path : res) {
       for (auto& w : path) std::cout << w << " ";
