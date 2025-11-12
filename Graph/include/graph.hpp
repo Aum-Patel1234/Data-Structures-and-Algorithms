@@ -78,7 +78,9 @@ class Graph {
   std::vector<int> kahnSort(std::vector<std::vector<int>>& graph);
   std::vector<int> shortestPathFromSrcDAG(int V, int E, const std::vector<std::vector<int>>& edges);
   std::vector<int> shortestPathFromSrc(const std::vector<std::vector<int>>& adj, int src);
-  std::vector<int> dijkstra(int V, const std::vector<std::vector<int>>& edges, int src);
+  std::vector<int> dijkstraPQ(int V, const std::vector<std::vector<int>>& edges, int src);
+  std::vector<int> dijkstraSet(int V, const std::vector<std::vector<int>>& edges, int src);
+  std::vector<int> printShortestPath(int n, int m, std::vector<std::vector<int>>& edges);
   bool detectCycleDirectedGraphKahnAlgo(std::vector<std::vector<int>>& graph);
   bool detectCycleDFS(std::vector<std::vector<int>>& graph);
   bool detectCycleBFS(std::vector<std::vector<int>>& graph);
