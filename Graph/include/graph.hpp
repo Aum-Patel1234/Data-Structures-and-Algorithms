@@ -81,6 +81,7 @@ class Graph {
   std::vector<int> dijkstraPQ(int V, const std::vector<std::vector<int>>& edges, int src);
   std::vector<int> dijkstraSet(int V, const std::vector<std::vector<int>>& edges, int src);
   std::vector<int> bellmanFord(int V, const std::vector<std::vector<int>>& edges, int src);
+  std::vector<std::vector<int>> floydWarshall(int V, const std::vector<std::vector<int>>& edges);
   std::vector<int> printShortestPath(int n, int m, std::vector<std::vector<int>>& edges);
   bool detectCycleDirectedGraphKahnAlgo(std::vector<std::vector<int>>& graph);
   bool detectCycleDFS(std::vector<std::vector<int>>& graph);
