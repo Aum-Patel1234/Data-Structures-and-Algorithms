@@ -1,4 +1,5 @@
 #include <cassert>
+#include <cinttypes>
 #include <iostream>
 #include <unordered_map>
 #include <vector>
@@ -22,13 +23,31 @@ bool canSum(const std::vector<int>& arr, int target, std::unordered_map<int, boo
   return memo[target] = false;
 }
 
+bool canSumTab(const std::vector<int>& arr, int target) {
+  size_t size = target + 1;
+  std::vector<uint8_t> tab(size);
+  tab[0] = 1;
+
+  for (int i = 0; i < size; ++i) {
+    if (tab[i]) {
+      for (int num : arr) {
+        if (i + num < size) tab[i + num] = 1;
+      }
+    }
+  }
+
+  return tab[target];
+}
+
 bool canSum(const std::vector<int>& arr, int target) {
-  std::unordered_map<int, bool> memo;
-  return canSum(arr, target, memo);
+  // std::unordered_map<int, bool> memo;
+  // return canSum(arr, target, memo);
+  return canSumTab(arr, target);
 }
 
 int main() {
-  assert(canSum({2, 3}, 7) == true);        // 2+2+3
+  assert(canSum({2, 3}, 7) == true);  // 2+2+3
+  assert(canSum({4, 6}, 10) == true);
   assert(canSum({5, 3, 4, 7}, 7) == true);  // direct 7
   assert(canSum({2, 4}, 7) == false);       // impossible
   assert(canSum({2, 3, 5}, 8) == true);     // 3+5
