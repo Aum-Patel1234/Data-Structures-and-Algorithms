@@ -32,6 +32,8 @@ bool canConstruct(std::string str, const std::vector<std::string>& strs, std::un
   return map[str] = false;
 }
 
+bool canConstructTab(std::string str, const std::vector<std::string>& strs) {}
+
 bool canConstructDp(std::string str, const std::vector<std::string>& strs) {
   std::unordered_map<std::string, bool> map;
   return canConstruct(str, strs, map);
