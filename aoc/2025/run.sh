@@ -11,7 +11,7 @@ if [ -f .env ]; then
   export session
 fi
 
-echo "$session"
+# echo "$session"
 SOURCE="$1"
 shift
 

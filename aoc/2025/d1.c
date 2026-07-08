@@ -8,7 +8,7 @@
 const char* link = "https://adventofcode.com/2025/day/1/input";
 
 typedef struct {
-  char a[5];
+  char a[6];
 } Data;
 
 Vec input_to_vec(char* input) {
@@ -29,18 +29,22 @@ Vec input_to_vec(char* input) {
 
     i++;
   }
+  if (j > 0) {
+    d.a[j] = '\0';
+    vec_add_element(&vec, &d);
+  }
   return vec;
 }
 
-int get_num(const char* str) {
-  int num = 0;
-
-  for (int i = 1; str[i] != '\0'; ++i) {
-    num = (num * 10) + (str[i] - '0');
-  }
-
-  return str[0] == 'L' ? -num : num;
-}
+// int get_num(const char* str) {
+//   int num = 0;
+//
+//   for (int i = 1; str[i] != '\0'; ++i) {
+//     num = (num * 10) + (str[i] - '0');
+//   }
+//
+//   return str[0] == 'L' ? -num : num;
+// }
 
 int main() {
   char* input = get_data(link);
@@ -50,22 +54,31 @@ int main() {
     return 0;
   }
 
+  // char* input = "R1000\nL50\0";
   Vec vec = input_to_vec(input);
+  // printf("vec size=%zu\n", vec.size);
   Data* arr = (Data*)vec.data;
 
   int ans = 0;
-  int start = 50;
-  for (size_t i = 0; i < vec.size; i++) {
-    // printf("%s\n", arr[i].a);
-    char* data = arr[i].a;
-    int num = get_num(data);
-    // printf("%s - %d\n", data, num);
+  int pos = 50;
 
-    start = (start + num) % 100;
-    if (start == 0) ans++;
+  for (size_t i = 0; i < vec.size; i++) {
+    char dir = arr[i].a[0];
+    int amount = atoi(arr[i].a + 1);
+
+    for (int j = 0; j < amount; j++) {
+      if (dir == 'R')
+        pos = (pos + 1) % 100;
+      else
+        pos = (pos + 99) % 100;  // -1 mod 100
+
+      if (pos == 0) ans++;
+    }
   }
 
-  printf("The ans for my input = %d", ans);
+  printf("%d\n", ans);
+
+  printf("The ans for my input = %d\n", ans);
   // NOTE: to get max size of any str
   // size_t i = 0;
   // int max_size = 0, curr_size = 0;
